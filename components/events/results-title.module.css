@@ -1,0 +1,9 @@
+.results {
+  text-align: center;
+}
+
+.date {
+  font-weight: bold;
+  font-size: 2rem;
+  padding-bottom: 1rem;
+}

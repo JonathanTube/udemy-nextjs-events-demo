@@ -1,0 +1,39 @@
+.item {
+  display: flex;
+  height: 16rem;
+  margin: 1.5rem 0;
+  box-shadow: 5px 2px 5px #aaa;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.content {
+  flex-grow: 1;
+  margin: auto 20px;
+}
+
+.date {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.address,
+.description {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #666;
+  margin-top: 1rem;
+}
+
+.actions {
+  text-align: right;
+}
+
+.icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-right: 0.2rem;
+}
