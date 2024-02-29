@@ -1,11 +1,17 @@
 import { useRouter } from "next/router"
 import EventList from "@/components/events/event-list"
-import { getFilterEvents } from "@/dummy-data"
+import { getFilterEvents } from "@/helpers/api-util"
 import ResultsTitle from "@/components/events/results-title"
 import Button from "@/components/ui/button"
 import ErrorAlert from "@/components/ui/error-alert"
 
-export default function FilteredEventsPage() {
+export default function FilteredEventsPage({
+  hasError,
+  noDate,
+  year,
+  month,
+  events,
+}) {
   const router = useRouter()
 
   const arr = router.query.slug
@@ -23,10 +29,7 @@ export default function FilteredEventsPage() {
     )
   }
 
-  const filteredYear = +arr[0]
-  const filteredMonth = +arr[1]
-
-  if (isNaN(filteredYear) || isNaN(filteredMonth)) {
+  if (hasError) {
     return (
       <>
         <ErrorAlert>
@@ -40,12 +43,7 @@ export default function FilteredEventsPage() {
     )
   }
 
-  const events = getFilterEvents({
-    year: filteredYear,
-    month: filteredMonth,
-  })
-
-  if (!events || events.length === 0) {
+  if (noDate) {
     return (
       <>
         <ErrorAlert>
@@ -59,7 +57,7 @@ export default function FilteredEventsPage() {
     )
   }
 
-  const date = new Date(filteredYear, filteredMonth - 1)
+  const date = new Date(year, month - 1)
 
   return (
     <div>
@@ -67,4 +65,41 @@ export default function FilteredEventsPage() {
       <EventList events={events} />
     </div>
   )
+}
+
+export async function getServerSideProps(context) {
+  console.log(context.params)
+  const { slug } = context.params
+
+  const filteredYear = +slug[0]
+  const filteredMonth = +slug[1]
+
+  if (isNaN(filteredYear) || isNaN(filteredMonth)) {
+    return {
+      props: {
+        hasError: true,
+      },
+    }
+  }
+
+  const events = await getFilterEvents({
+    year: filteredYear,
+    month: filteredMonth,
+  })
+
+  if (!events || events.length === 0) {
+    return {
+      props: {
+        noDate: true,
+      },
+    }
+  }
+
+  return {
+    props: {
+      year: filteredYear,
+      month: filteredMonth,
+      events: events,
+    },
+  }
 }

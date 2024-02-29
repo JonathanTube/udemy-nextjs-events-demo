@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 
 import EventList from "@/components/events/event-list"
-import { getAllEvents } from "@/dummy-data"
+import { getAllEvents } from "@/helpers/api-util"
 import EventsSearch from "@/components/events/events-search"
 
 export default function AllEventsPage({ events }) {
@@ -19,15 +19,14 @@ export default function AllEventsPage({ events }) {
   )
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   const { req, res } = context
 
-  console.log("================================getServerSideProps")
-
-  const events = getAllEvents()
+  const events = await getAllEvents()
   return {
     props: {
       events: events,
     },
+    revalidate: 60,
   }
 }

@@ -10,6 +10,7 @@
 .content {
   flex-grow: 1;
   margin: auto 20px;
+  padding: 1rem;
 }
 
 .date {
@@ -36,4 +37,11 @@
   width: 1.2rem;
   height: 1.2rem;
   margin-right: 0.2rem;
+}
+
+@media screen and (max-width: 700px) {
+  .item {
+    display: block;
+    height: auto;
+  }
 }

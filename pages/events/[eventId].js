@@ -1,17 +1,10 @@
 // import { useRouter } from "next/router"
-import { getEventById } from "@/dummy-data"
+import { getEventById, getAllEvents } from "@/helpers/api-util"
 import EventItem from "@/components/events/event-item"
 import ErrorAlert from "@/components/ui/error-alert"
 import Button from "@/components/ui/button"
 
 export default function EventDetailPage({ event }) {
-  // const router = useRouter()
-  // console.log(router.query)
-  // const { eventId } = router.query
-  // console.log(eventId)
-
-  // const event = getEventById(eventId)
-
   if (!event) {
     return (
       <>
@@ -37,7 +30,7 @@ export default function EventDetailPage({ event }) {
 export async function getStaticProps(context) {
   const { params } = context
   const { eventId } = params
-  const fetchedEvent = getEventById(eventId)
+  const fetchedEvent = await getEventById(eventId)
   console.log("fetchedEvent=", fetchedEvent)
   if (!fetchedEvent) {
     return {
@@ -52,15 +45,19 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
+  const events = await getAllEvents()
+  const paths = events.map((event) => {
+    return {
+      params: {
+        eventId: event.id + "",
+      },
+    }
+  })
+
+  console.log(paths)
+
   return {
-    paths: [
-      {
-        params: { eventId: "1" },
-      },
-      {
-        params: { eventId: "2" },
-      },
-    ],
+    paths: paths,
     // fallback: false,
     fallback: true, // Even the id doesn't exist in paths, we still render the page
     // fallback: "blocking",

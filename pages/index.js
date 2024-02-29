@@ -1,6 +1,6 @@
 import styles from "@/styles/Home.module.css"
 import EventList from "@/components/events/event-list"
-import { getFeaturedEvents } from "@/dummy-data"
+import { getFeaturedEvents } from "@/helpers/api-util"
 
 export default function Home({ events }) {
   return (
@@ -13,19 +13,8 @@ export default function Home({ events }) {
 }
 
 export async function getStaticProps(context) {
-  console.log("revalidate======")
-  const featuredEvents = getFeaturedEvents()
-
-  // this is just a dummy code to show if something happend the page will be redirected to another router.
-  // if (featuredEvents.length % 2 === 0) {
-  //   return {
-  //     props: {
-  //       redirect: {
-  //         destination: "/",
-  //       },
-  //     },
-  //   }
-  // }
+  const featuredEvents = await getFeaturedEvents()
+  console.log(featuredEvents)
 
   if (featuredEvents.length === 0) {
     return {

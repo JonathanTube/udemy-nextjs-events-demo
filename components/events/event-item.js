@@ -1,6 +1,7 @@
 import classes from "./event-item.module.css"
 import Button from "@/components/ui/button"
 import IconCalendar from "../icons/icon-calendar.js"
+import Image from "next/image"
 
 export default function EventItem(props) {
   const { title, image, date, description, location, id } = props
@@ -12,7 +13,7 @@ export default function EventItem(props) {
 
   return (
     <li className={classes.item}>
-      <img src={image} alt="" />
+      <Image src={image} alt="" height={260} width={300} quality={10} />
       <div className={classes.content}>
         <div className={classes.summary}>
           <h2>{title}</h2>
