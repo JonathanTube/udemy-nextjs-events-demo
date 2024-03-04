@@ -1,0 +1,17 @@
+.commentItem {
+  width: 48rem;
+  padding: 1rem 2rem;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  list-style: none;
+  border-top: 1px solid #aaa;
+  box-sizing: border-box;
+}
+
+.comment {
+  text-align: left;
+}
+
+.name {
+  text-align: right;
+}

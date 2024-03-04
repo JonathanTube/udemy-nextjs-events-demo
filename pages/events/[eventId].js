@@ -3,15 +3,9 @@ import { getEventById } from "@/dummy-data"
 import EventItem from "@/components/events/event-item"
 import ErrorAlert from "@/components/ui/error-alert"
 import Button from "@/components/ui/button"
+import Comments from "@/components/input/comments"
 
 export default function EventDetailPage({ event }) {
-  // const router = useRouter()
-  // console.log(router.query)
-  // const { eventId } = router.query
-  // console.log(eventId)
-
-  // const event = getEventById(eventId)
-
   if (!event) {
     return (
       <>
@@ -30,6 +24,7 @@ export default function EventDetailPage({ event }) {
     <div>
       <h1>Event Detail</h1>
       <EventItem {...event} />
+      <Comments eventId={event.id} />
     </div>
   )
 }
@@ -38,16 +33,16 @@ export async function getStaticProps(context) {
   const { params } = context
   const { eventId } = params
   const fetchedEvent = getEventById(eventId)
-  console.log("fetchedEvent=", fetchedEvent)
+  // console.log("fetchedEvent=", fetchedEvent)
   if (!fetchedEvent) {
     return {
-      notFound: true,
+      notFound: true
     }
   }
   return {
     props: {
-      event: fetchedEvent,
-    },
+      event: fetchedEvent
+    }
   }
 }
 
@@ -55,14 +50,14 @@ export async function getStaticPaths() {
   return {
     paths: [
       {
-        params: { eventId: "1" },
+        params: { eventId: "1" }
       },
       {
-        params: { eventId: "2" },
-      },
+        params: { eventId: "2" }
+      }
     ],
     // fallback: false,
-    fallback: true, // Even the id doesn't exist in paths, we still render the page
+    fallback: true // Even the id doesn't exist in paths, we still render the page
     // fallback: "blocking",
   }
 }

@@ -1,0 +1,30 @@
+.notification {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem 12rem;
+}
+
+.notification h1 {
+  text-align: left;
+  color: #fff;
+}
+
+.notification p {
+  text-align: right;
+  font-size: 20px;
+  color: #fff;
+}
+
+.success {
+  background-color: green;
+}
+
+.error {
+  background-color: red;
+}
+
+.pending {
+  background-color: #666;
+}
